@@ -7,7 +7,7 @@ This project create tables Postgres data base. It also creates a REST API on top
 
 * Use *--renew-anon-volumes* only when you want to reset your volumes.
 ```sh
-$ DATABASE_NAME=postgres PGRST_DB_ANON_ROLE=web_anon GRST_DB_SCHEMA=public docker-compose up --renew-anon-volumes
+$ DATABASE_NAME=postgres PGRST_DB_ANON_ROLE=web_anon PGRST_DB_SCHEMA=public docker-compose up --renew-anon-volumes
 ```
 ## To post to the container
 

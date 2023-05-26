@@ -3,7 +3,7 @@ services:
     api-postgrest:
         image: postgrest/postgrest
         ports:
-            - 3000:3000
+            - "3000:3000"
         depends_on:
             - database-postgres
         environment:
