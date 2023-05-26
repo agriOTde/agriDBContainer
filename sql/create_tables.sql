@@ -1,10 +1,10 @@
 
 
 -- Creation of country table
-CREATE TABLE public.country (
-  country_id INT NOT NULL,
-  country_name varchar(450) NOT NULL,
-  PRIMARY KEY (country_id)
+CREATE TABLE public.moisture (
+  moistureNum INT NOT NULL,
+  moistureVal float NOT NULL,
+  PRIMARY KEY (moistureNum)
 );
 
 -- INSERT INTO public.country (country_id,country_name) values(1,'Superman')
