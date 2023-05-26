@@ -12,5 +12,5 @@ $ DATABASE_NAME=postgres PGRST_DB_ANON_ROLE=web_anon PGRST_DB_SCHEMA=public dock
 ## To post to the container
 
 ```sh
-$ curl -X POST -H 'Content-Type: application/json' -d '{"key1":value, key2":"value"}' http://localhost:3000/<table name>
+$ curl -X POST -H 'Content-Type: application/json' -d '{"moisturenum":0, moistureval":24.5}' http://localhost:3000/moisture
 ```
