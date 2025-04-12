@@ -1,34 +1,50 @@
-version: '3.7'
+version: '3.8'
+
 services:
-    api-postgrest:
-        image: postgrest/postgrest
-        ports:
-            - "3000:3000"
-        depends_on:
-            - database-postgres
-        environment:
-            - PGRST_DB_URI=postgres://postgres:postgres@database-postgres:5432/${DATABASE_NAME}
-            - PGRST_DB_SCHEMA=${PGRST_DB_SCHEMA} #public
-            - PGRST_DB_ANON_ROLE=${PGRST_DB_ANON_ROLE} #web_anon
+  postgres:
+    image: postgres:latest
+    container_name: postgres_agri
+    environment:
+      POSTGRES_USER: agri
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
 
-    database-postgres:
-        image: postgres:10.5
-        restart: always
-        environment: 
-          - POSTGRES_USER=postgres
-          - POSTGRES_PASSWORD=postgres
-          - POSTGRES_DB=${DATABASE_NAME}
+  postgrest:
+    image: postgrest/postgrest
+    container_name: postgrest_agri
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./postgrest.conf:/etc/postgrest.conf
+    networks:
+      - backend
+    command: postgrest /etc/postgrest.conf
 
-        ports:
-          - '5438:5432'
-        volumes:
-          # - ./postgres-data:/var/lib/postgresql/data
-          # copy the sql script to create tables
-          # - pgdata:/var/lib/postgresql/data
-          - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-          - ./sql/create_roles.sql:/docker-entrypoint-initdb.d/create_roles.sql
-
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: "admin"  # Change the password if needed
+    ports:
+      - "3001:3000"  # You can access Grafana via localhost:3001
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - postgres
+    networks:
+      - backend
 
 volumes:
+  pgdata:
+  grafana_data:
 
-    pgdata:
+networks:
+  backend:
