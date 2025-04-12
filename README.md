@@ -1,16 +1,46 @@
-## Creating Postgres DB and PostgREST API with Docker Compose 
+# Important Commands
 
-This project create tables Postgres data base. It also creates a REST API on top of DB, to espose it as an HTTP resource
+## Docker
 
+### docker-compose
 
-## To run the Container
-
-* Use *--renew-anon-volumes* only when you want to reset your volumes.
-```sh
-$ DATABASE_NAME=postgres PGRST_DB_ANON_ROLE=web_anon PGRST_DB_SCHEMA=public docker-compose up --renew-anon-volumes
+* disconnect
+``` bash
+sudo docker-compose down
 ```
-## To post to the container
+* connect/build
+``` bash
+sudo docker-compose up -d --build
+```
 
-```sh
-$ curl -X POST -H 'Content-Type: application/json' -d '{"moisturenum":0, moistureval":24.5}' http://localhost:3000/moisture
+* List containers
+``` bash
+sudo docker ps
+```
+* list logs
+``` bash
+sudo docker logs -f <container-name>
+```
+### postgres
+
+* Connect to the postgres DB
+``` bash
+sudo docker exec -it postgres_agri psql -U agri -d mydb
+```
+* connect to 
+
+### Tmux
+
+* create
+``` bash
+ tmux new-session -s localtunnel
+```
+* Ctrl + a, then release and press d
+* list
+``` bash
+ tmux ls
+```
+* kill session
+``` bash
+ tmux kill-session -t localtunnel
 ```
